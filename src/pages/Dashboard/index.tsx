@@ -1,57 +1,76 @@
 import React, { useState } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
-import { Title, Form, Repositories } from './styles';
 import logoImg from '../../assets/logo.svg';
 import api from '../../services/api';
 
+import { Title, Form, Repositories, Error } from './styles';
+
 interface Repository {
-  fullname: string;
+  full_name: string;
   description: string;
   owner: {
     login: string;
     avatar_url: string;
+    full_name: string;
   };
 }
 
 const Dashboard: React.FC = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [newRepo, setNewRepo] = useState('');
+  const [inputError, setInputError] = useState('');
 
   async function handleAddRepository(
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
 
-    const { data: repository } = await api.get(`/repos/${newRepo}`);
-    setRepositories([...repositories, repository]);
+    if (!newRepo) {
+      setInputError('Digite o nome do repositório');
+      return;
+    }
+
+    try {
+      const { data: repository } = await api.get<Repository>(
+        `/repos/${newRepo}`,
+      );
+
+      setRepositories([...repositories, repository]);
+      setNewRepo('');
+      setInputError('');
+    } catch (err) {
+      setInputError('Erro ao buscar repositorio');
+    }
   }
 
   return (
     <>
       <img src={logoImg} alt="Logo - GitHub Explore" />
       <Title> Explore repositórios no GitHub </Title>
-      <Form onSubmit={handleAddRepository}>
+      <Form onSubmit={handleAddRepository} hasError={!!inputError}>
         <input
           value={newRepo}
-          onChange={(e) => setNewRepo(e.target.value)}
+          onChange={e => setNewRepo(e.target.value)}
           placeholder="Digite aqui"
         />
         <button type="submit"> Pesquisar </button>
       </Form>
-
+      {inputError && <Error>{inputError}</Error>}
       <Repositories>
-        <a href="/">
-          <img
-            src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-            alt="Teste"
-          />
+        {repositories.map(repository => (
+          <a href="/" key={repository.full_name}>
+            <img
+              src={repository.owner.avatar_url}
+              alt={repository.owner.login}
+            />
 
-          <div>
-            <strong> Auuuuuuuuuuuuuuuuuuuu </strong>
-            <p>ggdrnjsksjn</p>
-          </div>
-          <FiChevronRight size="20" />
-        </a>
+            <div>
+              <strong>{repository.owner.full_name}</strong>
+              <p>{repository.description}</p>
+            </div>
+            <FiChevronRight size="20" />
+          </a>
+        ))}
       </Repositories>
     </>
   );
