@@ -22,6 +22,7 @@ export const Form = styled.form`
     border-radius: 5px 0 0 5px;
     color: #3a3a3a;
     border: 2px solid #fff;
+
     &::placeholder {
       color: #a8a8b3
     }
@@ -39,6 +40,61 @@ export const Form = styled.form`
 
     &:hover {
       background: ${shade(0.2, '#04d361')}
+    }
+  }
+`;
+
+export const Repositories = styled.div`
+  margin-top: 00px;
+  max-width: 700px;
+
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateX(10px);
+  }
+
+
+
+  a {
+    background: #fff;
+    border-radius: 5px;
+    width: 100%;
+    padding: 24px;
+    display: block;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+
+    & + a {
+      margin-top: 16px;
+    }
+
+    img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%
+    }
+
+    div {
+      margin-left: 16px;
+
+      strong {
+        font-size: 20px;
+        color: #3D3D4D;
+      }
+
+      p {
+        font-size: 18px;
+        color: #A8A8B3;
+        margin-top: 4px;
+      }
+    }
+
+    svg {
+      margin-left: auto;
+      color: #cbcbd6;
     }
   }
 `;
