@@ -38,13 +38,26 @@ const Repository: React.FC = () => {
   const { params } = useRouteMatch<RepositoryParams>();
 
   useEffect(() => {
-    api.get(`repos/${params.repository}`).then((res) => {
-      setRepo(res.data);
-    });
+    const loadData = async ():Promise<void> => {
+      const [
+        { data: respositoryResponse },
+        { data: issuesResponse },
+      ] = await Promise.all([
+        api.get<RepositoryGitHub>(`repos/${params.repository}`),
+        api.get<Issue[]>(`repos/${params.repository}/issues`),
+      ]);
+      setRepo(respositoryResponse);
+      setIssues(issuesResponse);
+    };
 
-    api.get(`repos/${params.repository}/issues`).then((res) => {
-      setIssues(res.data);
-    });
+    loadData();
+    // api.get(`repos/${params.repository}`).then((res) => {
+    //   setRepo(res.data);
+    // });
+
+    // api.get(`repos/${params.repository}/issues`).then((res) => {
+    //   setIssues(res.data);
+    // });
   }, [params.repository]);
 
   return (
