@@ -10,7 +10,7 @@ interface RepositoryParams {
   repository: string;
 }
 
-interface Repository {
+interface RepositoryGitHub {
   full_name: string;
   description: string;
   forks_count: number;
@@ -32,7 +32,7 @@ interface Issue {
 }
 
 const Repository: React.FC = () => {
-  const [repo, setRepo] = useState<Repository | null>(null);
+  const [repo, setRepo] = useState<RepositoryGitHub | null>(null);
   const [issues, setIssues] = useState<Issue[]>([]);
 
   const { params } = useRouteMatch<RepositoryParams>();
