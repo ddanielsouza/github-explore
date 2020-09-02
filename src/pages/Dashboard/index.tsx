@@ -10,14 +10,16 @@ interface Repository {
   owner: {
     login: string;
     avatar_url: string;
-  }
+  };
 }
 
 const Dashboard: React.FC = () => {
-  const [repositories, setRepositories] = useState< Repository[] >([]);
+  const [repositories, setRepositories] = useState<Repository[]>([]);
   const [newRepo, setNewRepo] = useState('');
 
-  async function handleAddRepository(event: React.FormEvent<HTMLFormElement>):Promise<void> {
+  async function handleAddRepository(
+    event: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     event.preventDefault();
 
     const { data: repository } = await api.get(`/repos/${newRepo}`);
