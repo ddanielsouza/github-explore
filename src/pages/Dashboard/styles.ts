@@ -13,6 +13,11 @@ export const Title = styled.h1`
   margin-top: 80px;
 `;
 
+const styleHassErrorForm = css`
+  border-color: #c53030;
+  border-right: 0;
+`;
+
 export const Form = styled.form<FormProps>`
   margin-top: 40px;
   max-width: 700px;
@@ -27,12 +32,7 @@ export const Form = styled.form<FormProps>`
     color: #3a3a3a;
     border: 2px solid #fff;
 
-    ${props =>
-      props.hasError &&
-      css`
-        border-color: #c53030;
-        border-right: 0;
-      `}
+    ${({ hasError }) => hasError && styleHassErrorForm}
 
     &::placeholder {
       color: #a8a8b3;
@@ -59,11 +59,6 @@ export const Repositories = styled.div`
   margin-top: 00px;
   max-width: 700px;
 
-  transition: transform 0.2s;
-
-  &:hover {
-    transform: translateX(10px);
-  }
 
   a {
     background: #fff;
@@ -78,6 +73,11 @@ export const Repositories = styled.div`
 
     & + a {
       margin-top: 16px;
+    }
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateX(10px);
     }
 
     img {
