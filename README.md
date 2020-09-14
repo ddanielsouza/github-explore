@@ -5,7 +5,6 @@
 
 [![Langs](https://img.shields.io/badge/Langs-ReactJS%20%7C%20Javascript-lightgrey)]()
 
-***INSERT ANOTHER GRAPHIC HERE***
 ### https://github-explore-kappa.vercel.app/
 [![Demonstration](https://raw.githubusercontent.com/ddanielsouza/github-explore/master/github-explore-kappa.vercel.app.png)]()
 
